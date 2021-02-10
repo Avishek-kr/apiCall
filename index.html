@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{margin: 0;}
+        body{
+            margin-top: 15rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #1b1b1b;
+        }
+        .card{
+            background-color: white;
+            width: 500px;
+            height: 500px;
+            text-align: center;
+            font-size: 1.5rem;
+            border-radius: 20px;
+            transition: 0.5s all ease-in-out;
+        }
+            .card-body-title{
+                margin: 1rem;
+            }
+        .card-body-img{
+            width: 30%;
+            margin-top: 30px;
+        }
+        .card-body-text{
+            text-transform: uppercase;
+            margin: 5px;
+        }
+        .card-footer{
+            display: flex;
+            margin-top: 1rem;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .card-footer-social h3{
+            margin-bottom: 1rem;
+        }
+
+        .card-footer-social p{
+          letter-spacing: 1px;
+        }
+
+        .card:hover{
+            background-color: whitesmoke;
+            width: 500px;
+            height: 500px;
+            text-align: center;
+            font-size: 1.5rem;
+            border-radius: 20px;
+            transform: scale(1.03);
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+   
+    </div>
+    
+    <script>
+        const container=document.querySelector('#container')
+
+        const request= new XMLHttpRequest();
+        request.open('GET',"https://restcountries.eu/rest/v2/name/nepal")
+        request.send()
+
+        // to get response
+        request.addEventListener('load',function(){
+            const [data]=JSON.parse(this.responseText)
+            // console.log(data.capital)
+            const htmlData=`
+            <div id="card">
+            <article class="card">
+                <div class="card-body">
+                    <img src="${data.flag}" alt="" class="card-body-img">
+                    <h1 class="card-body-title">
+                        ${data.name} <span></span>
+                    </h1>
+                    <p class="card-body-text"> capital : ${data.capital}</p>
+                </div>
+                <hr>
+                <div class="card-footer">
+                    <div class="card-footer-social">
+                        <h3>${data.nativeName}</h3>
+                        <p>Native Language</p>
+                    </div>
+                    <div class="card-footer-social">
+                        <h3>${data.population}</h3>
+                        <p>Population</p>
+                    </div>
+                    <div class="card-footer-social">
+                        <h3>${data.demonym}</h3>
+                        <p>Demonym</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+            `;
+
+            container.insertAdjacentHTML('afterbegin',htmlData)
+        })
+    </script>
+</body>
+</html>
